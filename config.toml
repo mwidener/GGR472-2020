@@ -33,3 +33,6 @@ theme = "hugo-theme-learn"
   ordersectionsby = "weight"
   # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = ""
+
+[outputs]
+  home = [ "HTML", "RSS", "JSON"]
