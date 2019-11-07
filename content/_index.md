@@ -7,7 +7,7 @@ pre = "<b>1. </b>"
 +++
 
 
-# Welcome to Web Maps!
+# Welcome to Developing Web Maps!
 
 Welcome to GGR 472 - Winter 2020. In this class we will explore how web maps are designed and created, using the [MapBox GL JS API](https://docs.mapbox.com/mapbox-gl-js/api/). 
 
