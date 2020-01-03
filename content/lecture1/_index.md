@@ -1,7 +1,7 @@
 +++
 title = "Lecture 1: Intro"
 date = 2019-11-06T18:06:35-05:00
-weight = 5
+weight = 3
 chapter = true
 pre = "<b>1. </b>"
 +++
