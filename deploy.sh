@@ -9,7 +9,7 @@ printf "\033[0;32mDeploying updates to GitHub...\033[0m\n"
 hugo -t hugo-theme-learn # if using a theme replace with 'hugo -t <YOURTHEME>'
 
 # Go to Public folder
-cd public @ b3e6af1 
+cd public
 
 # Add changes to git.
 git add .
