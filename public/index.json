@@ -1,0 +1,99 @@
+[
+{
+	"uri": "http://mwidener.github.io/lecture1/lec1_1/",
+	"title": "Review of Course Structure",
+	"tags": [],
+	"description": "",
+	"content": "For ‘letter marked’ assignments, I will use the Faculty of Arts and Sciences marking criteria.\n See syllabus for course policies on accessibility, accommodation, academic integrity and late assignments.\n This course will have a lot of new material for most people, so as a general rule, it's best to keep an open line of communication with me!\n Materials  Text editor  This is where you will write down and edit your code. A good editor is key! I recommend Atom or Sublime   Mapbox Account  www.mapbox.com   Lynda Access  access via this link to lynda at uoft   google or yahoo or bing or alta vista or whatever\u0026hellip;  "
+},
+{
+	"uri": "http://mwidener.github.io/lecture2/lec2_1/",
+	"title": "Strengths/Weaknesses of Web Maps",
+	"tags": [],
+	"description": "",
+	"content": "Strengths of Web Maps Weaknesses of Web Maps "
+},
+{
+	"uri": "http://mwidener.github.io/",
+	"title": "Home",
+	"tags": [],
+	"description": "",
+	"content": "Welcome to Developing Web Maps! Welcome to GGR 472: Developing Web Maps - Winter 2020. In this class we will explore how web maps are designed and created, using the MapBox GL JS API.\nCourse Overview  what web maps are good for, and what they're less good for, what kinds of spatial data they use, how design considerations change for viewing spatial data online numerous interactive features, and how to do basic GIS online.  A note on coding: Don't be this guy: "
+},
+{
+	"uri": "http://mwidener.github.io/lecture1/lec1_2/",
+	"title": "Programming",
+	"tags": [],
+	"description": "",
+	"content": "Programming is important! We'll be using three languages:\n JavaScript HTML CSS  Why do we need to program?  You can handle bigger projects and more data through automation and logic. This is the standard way that serious web mapping and web GIS is done. It looks great on your resume!  HTML  HyperText Markup Language  Files sent from servers to personal computers They tell the computer things like what to display or where to get data   HTML elements tell us things about where text should go, how it should be displayed, if an image should be centered  We express HTML elements through HTML tags  \u0026lt;html\u0026gt; ... \u0026lt;/html\u0026gt;     http://html.com/document/  CSS  Cascading Style Sheet  “Style sheet” code used to style the content of a web page. Interacts with HTML and describes how things should be sized, coloured, etc.  Can be more complicated     Helps separate the website content from website styling  Reduces repetition if you have multiple HTML docs   http://www.w3schools.com/css/default.asp  JavaScript  The de facto lingua franca of the world wide web Controls the behaviour of a webpage  HTML and CSS just describe   Javascript is a programming language  Conditional statements Logic Looping Data manipulation/handling    "
+},
+{
+	"uri": "http://mwidener.github.io/lecture2/lec2_2/",
+	"title": "Strengths/Weaknesses of Web Maps",
+	"tags": [],
+	"description": "",
+	"content": "Strengths of Web Maps Weaknesses of Web Maps "
+},
+{
+	"uri": "http://mwidener.github.io/introduction/",
+	"title": "Course Information",
+	"tags": [],
+	"description": "",
+	"content": "This section has information about the course structure and where you can go to get help. "
+},
+{
+	"uri": "http://mwidener.github.io/lecture1/lec1_3/",
+	"title": "Basic Programming Concepts",
+	"tags": [],
+	"description": "",
+	"content": "Basic Programming Concepts Variable assignment var x = 12 var blah = \u0026#34;some text that i\u0026#39;m writing right now!\u0026#34; blah = x y = blah - x Arrays var universities = [\u0026#34;UofT\u0026#34;, \u0026#34;Western\u0026#34;, \u0026#34;McMaster\u0026#34;]; universities[0] //will return \u0026#34;UofT\u0026#34; Conditional statements if (condition) { // block of code to be executed if the condition is true } An example from https://www.w3schools.com/js/js_if_else.asp\nif (hour \u0026lt; 18) { greeting = \u0026#34;Good day\u0026#34;; } else { greeting = \u0026#34;Good evening\u0026#34; } What would this return now?\nLoops var i; for (i = 0; i \u0026lt; universities.length; i++) { text += universities[i] + \u0026#34;\u0026lt;br\u0026gt;\u0026#34;; } /*will print: UofT Western McMaster */ To the board! "
+},
+{
+	"uri": "http://mwidener.github.io/lecture2/lec2_3/",
+	"title": "Strengths/Weaknesses of Web Maps",
+	"tags": [],
+	"description": "",
+	"content": "Strengths of Web Maps Weaknesses of Web Maps "
+},
+{
+	"uri": "http://mwidener.github.io/lecture1/",
+	"title": "Lecture 1: Intro",
+	"tags": [],
+	"description": "",
+	"content": "Lecture 1 What are web maps?  What is this class about?  Investigating the history of web maps Exploring a range of web mapping tools Exploring a range of development methods Group work developing your own web map  "
+},
+{
+	"uri": "http://mwidener.github.io/lecture2/",
+	"title": "Lecture 2",
+	"tags": [],
+	"description": "",
+	"content": "What are web maps? Web maps are just maps on the internet. They can be static or interactive \u0026hellip; but nowadays they're mostly interactive.\nEasy way to diffuse spatial information and provide interactivity.\nWeb maps help move geographic information systems and sciences to the world wide web.\nWeb mapping consists of three major components:  geography information the Web  In this class we're moving in a different direction than many of your previous GIS courses. How can we use the web to make mapping useful in new and different ways?\n"
+},
+{
+	"uri": "http://mwidener.github.io/introduction/syllabus/",
+	"title": "Syllabus",
+	"tags": [],
+	"description": "",
+	"content": "   Week Topic Assignment Due     Week 1     Week 2     Week 3     Week 4     Week 5     Week 6     Week 7     Week 8     Week 9     Week 10     Week 11     Week 12     Week 13      "
+},
+{
+	"uri": "http://mwidener.github.io/introduction/instructor_info/",
+	"title": "Instructor Information",
+	"tags": [],
+	"description": "",
+	"content": "Prof. Michael Widener email michael michael DOT widener AT utoronto DOT ca\noffice hours: Thursdays 1pm - 3pm Sid Smith Hall 5037\nAdditional resources  Mapbox GL JS API Mapbox GL JS Examples  "
+},
+{
+	"uri": "http://mwidener.github.io/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "http://mwidener.github.io/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]
