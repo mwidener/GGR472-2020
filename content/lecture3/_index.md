@@ -1,12 +1,13 @@
 +++
-title = "Lecture 3: Data, cont."
+title = "Lecture 3: Data/Viz"
 date = 2020-01-22
 weight = 5
 chapter = true
-pre = "<b>2. </b>"
+pre = "<b>3. </b>"
 +++
 
-# Recall js objects?
+## Web-based Spatial Data, continued
+### Recall js objects?
 
 ```js
 var mycar = "subaru";
@@ -66,6 +67,3 @@ mycar.make
        ]
      }
 ```
-
-
-
