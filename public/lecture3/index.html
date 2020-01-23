@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Making Web Maps :: GGR472 Winter 2020</title>
+    <title>Lecture 3: Data, cont. :: GGR472 Winter 2020</title>
 
     
     <link href="/css/nucleus.css?1579787532" rel="stylesheet">
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/lecture2/lec2_3/">
+  <body class="" data-url="/lecture3/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -341,7 +341,7 @@
   
     
     <li data-nav-id="/lecture2/" title="Lecture 2: Data" class="dd-item 
-        parent
+        
         
         
         ">
@@ -422,8 +422,8 @@
   
     
     <li data-nav-id="/lecture2/lec2_3/" title="Making Web Maps" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/lecture2/lec2_3/">
@@ -533,8 +533,8 @@
   
     
     <li data-nav-id="/lecture3/" title="Lecture 3: Data, cont." class="dd-item 
-        
-        
+        parent
+        active
         
         ">
       <a href="/lecture3/">
@@ -642,13 +642,7 @@
             
           
           
-            
-            
-          
-          
-            <a href='/'>Home</a> > <a href='/lecture2/'>Lecture 2: Data</a> > Making Web Maps
-          
-         
+            <a href='/'>Home</a> > Lecture 3: Data, cont.
           
          
           
@@ -676,38 +670,62 @@
 
 	
 
-<h2 id="how-do-we-make-web-maps">How do we make web maps</h2>
+<h1 id="recall-js-objects">Recall js objects?</h1>
 
-<h4 id="approach-depends-on-factors-that-are-similar-to-how-you-develop-conventional-gisystems">Approach depends on factors that are similar to how you develop conventional GISystems</h4>
+<pre><code class="language-js">var mycar = &quot;subaru&quot;;
 
-<ul>
-<li>Audience</li>
-<li>Scope</li>
-<li>Refresh rate</li>
+// name: value pairs (name/value separated by colon)
+var mycar = {
+	make: &quot;Subaru&quot;,
+	model: &quot;Impreza&quot;,
+	year: 2005,
+	states_provinces_driven_through: [&quot;ontario&quot;, &quot;new york&quot;, &quot;michigan&quot;];
+};
+</code></pre>
 
-<li><p>Collaboration strategy</p>
+<h4 id="what-would-this-return">What would this return?</h4>
 
-<h4 id="new-dimensions">New dimensions</h4></li>
+<pre><code class="language-js">mycar.make
+</code></pre>
 
-<li><p>interactivity</p></li>
+<h4 id="this-leads-us-to-geojson-geographic-java-script-object-notation">This leads us to geoJSON: Geographic Java Script Object Notation</h4>
 
-<li><p>Realtime</p></li>
+<h5 id="geojson-is-a-simple-open-standard-used-to-store-spatial-features-alongside-non-spatial-features">GeoJSON is a simple open standard used to store spatial features, alongside non-spatial features.</h5>
 
-<li><p>linkages to other online resources</p></li>
-</ul>
-
-<h1 id="group-exercise">Group exercise!</h1>
-
-<ul>
-<li>Find an online map on a website that isn’t a major web map provider (e.g. google, microsoft, etc.)
-
-<ul>
-<li>Describe the purpose of the map</li>
-<li>List any interactivity/features</li>
-<li>Does the map serve its purpose well?</li>
-<li>What additional features might be nice to have?</li>
-</ul></li>
-</ul>
+<pre><code class="language-javascript">{ &quot;type&quot;: &quot;FeatureCollection&quot;,
+    &quot;features&quot;: [
+      { &quot;type&quot;: &quot;Feature&quot;,
+        &quot;geometry&quot;: {&quot;type&quot;: &quot;Point&quot;, &quot;coordinates&quot;: [102.0, 0.5]},
+        &quot;properties&quot;: {&quot;prop0&quot;: &quot;value0&quot;}
+        },
+      { &quot;type&quot;: &quot;Feature&quot;,
+        &quot;geometry&quot;: {
+          &quot;type&quot;: &quot;LineString&quot;,
+          &quot;coordinates&quot;: [
+            [102.0, 0.0], [103.0, 1.0], [104.0, 0.0], [105.0, 1.0]
+            ]
+          },
+        &quot;properties&quot;: {
+          &quot;prop0&quot;: &quot;value0&quot;,
+          &quot;prop1&quot;: 0.0
+          }
+        },
+      { &quot;type&quot;: &quot;Feature&quot;,
+         &quot;geometry&quot;: {
+           &quot;type&quot;: &quot;Polygon&quot;,
+           &quot;coordinates&quot;: [
+             [ [100.0, 0.0], [101.0, 0.0], [101.0, 1.0],
+               [100.0, 1.0], [100.0, 0.0] ]
+             ]
+         },
+         &quot;properties&quot;: {
+           &quot;prop0&quot;: &quot;value0&quot;,
+           &quot;prop1&quot;: {&quot;this&quot;: &quot;that&quot;}
+           }
+         }
+       ]
+     }
+</code></pre>
 
 
 
@@ -867,7 +885,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -882,9 +899,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -918,7 +932,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -934,9 +947,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -989,6 +999,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -1003,6 +1014,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -1027,10 +1041,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/lecture2/lec2_2/" title="Classification of Web Maps"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/lecture2/lec2_6/" title="GML KML OSM-XML"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/lecture2/lec2_4/" title="Spatial Data" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/lecture3/lec3_1/" title="GeoJSON components" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

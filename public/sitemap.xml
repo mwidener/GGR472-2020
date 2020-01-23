@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://mwidener.github.io/lecture3/lec3_1/</loc>
+    <lastmod>2020-01-22T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://mwidener.github.io/lecture1/lec1_1/</loc>
     <lastmod>2020-01-03T15:16:16-05:00</lastmod>
   </url>
@@ -55,6 +60,11 @@
   <url>
     <loc>http://mwidener.github.io/lecture2/</loc>
     <lastmod>2020-01-03T14:56:18-05:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://mwidener.github.io/lecture3/</loc>
+    <lastmod>2020-01-22T00:00:00-05:00</lastmod>
   </url>
   
   <url>
