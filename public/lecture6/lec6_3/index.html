@@ -9,23 +9,23 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Classification of Web Maps :: GGR472 Winter 2020</title>
+    <title>Mouse Move Event Example :: GGR472 Winter 2020</title>
 
     
-    <link href="/css/nucleus.css?1581632757" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1581632757" rel="stylesheet">
-    <link href="/css/hybrid.css?1581632757" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1581632757" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1581632757" rel="stylesheet">
-    <link href="/css/auto-complete.css?1581632757" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1581632757" rel="stylesheet">
-    <link href="/css/theme.css?1581632757" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1581632757" rel="stylesheet">
+    <link href="/css/nucleus.css?1581632758" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1581632758" rel="stylesheet">
+    <link href="/css/hybrid.css?1581632758" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1581632758" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1581632758" rel="stylesheet">
+    <link href="/css/auto-complete.css?1581632758" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1581632758" rel="stylesheet">
+    <link href="/css/theme.css?1581632758" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1581632758" rel="stylesheet">
     
-      <link href="/css/theme-blue.css?1581632757" rel="stylesheet">
+      <link href="/css/theme-blue.css?1581632758" rel="stylesheet">
     
 
-    <script src="/js/jquery-3.3.1.min.js?1581632757"></script>
+    <script src="/js/jquery-3.3.1.min.js?1581632758"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/lecture2/lec2_2/">
+  <body class="" data-url="/lecture6/lec6_3/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -131,14 +131,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1581632757"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1581632757"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1581632758"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1581632758"></script>
 <script type="text/javascript">
     
         var baseurl = "http:\/\/mwidener.github.io\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1581632757"></script>
+<script type="text/javascript" src="/js/search.js?1581632758"></script>
 
     
   </div>
@@ -341,7 +341,7 @@
   
     
     <li data-nav-id="/lecture2/" title="Lecture 2: Data" class="dd-item 
-        parent
+        
         
         
         ">
@@ -396,8 +396,8 @@
   
     
     <li data-nav-id="/lecture2/lec2_2/" title="Classification of Web Maps" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/lecture2/lec2_2/">
@@ -1161,7 +1161,7 @@
   
     
     <li data-nav-id="/lecture6/" title="Filters and Mouse Events" class="dd-item 
-        
+        parent
         
         
         ">
@@ -1242,8 +1242,8 @@
   
     
     <li data-nav-id="/lecture6/lec6_3/" title="Mouse Move Event Example" class="dd-item 
-        
-        
+        parent
+        active
         
         ">
       <a href="/lecture6/lec6_3/">
@@ -1338,6 +1338,8 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
@@ -1352,7 +1354,7 @@
             
           
           
-            <a href='/'>Home</a> > <a href='/lecture2/'>Lecture 2: Data</a> > Classification of Web Maps
+            <a href='/'>Home</a> > <a href='/lecture6/'>Filters and Mouse Events</a> > Mouse Move Event Example
           
          
           
@@ -1363,6 +1365,23 @@
                   </span>
                 </div>
                 
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#let-s-try-this-out-with-a-mousemove-event">Let&rsquo;s try this out with a mousemove event.</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+                
               </div>
             </div>
             
@@ -1370,9 +1389,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Mouse Move Event Example
+            </h1>
           
 
         
@@ -1382,50 +1404,170 @@
 
 	
 
-<h2 id="classifying-web-maps">Classifying Web Maps</h2>
-
-<h4 id="a-2001-paper-by-jan-kraak-attempted-to-classify-web-maps">A 2001 paper by Jan Kraak attempted to classify web maps</h4>
+<h3 id="let-s-try-this-out-with-a-mousemove-event">Let&rsquo;s try this out with a mousemove event.</h3>
 
 <ul>
-<li>Web Maps
+<li>We can use the mousemove  event to highlight a spatial object when our mouse is hovering over it.</li>
+<li>What we need:
 
 <ul>
-<li>static maps</li>
-<li>view only</li>
-<li>interactive interface/contents</li>
-<li>dynamic maps</li>
-<li>view only</li>
-<li>interactive interface/contents</li>
+<li>Standard HTML file</li>
+<li>Javascript file with</li>
+<li>standard map object code</li>
+<li>Standard add source code</li>
+<li>Standard add layer code</li>
 </ul></li>
-</ul>
 
-<h4 id="other-ways-to-think-about-web-maps">Other ways to think about web maps</h4>
-
-<ul>
-<li>Analytical web maps
+<li><p>Things that are a bit different:</p>
 
 <ul>
-<li>Basically GIS online</li>
-</ul></li>
-<li>Animated/Realtime web maps
+<li>We need a second add layer code section</li>
+<li>We will use the filter option to initially display NO spatial objects from the layer</li>
 
-<ul>
-<li>Constantly updated maps showing changes in spatial locations</li>
-</ul></li>
-<li>Collaborative web maps
+<li><p>As the mouse moves, we will change the filter so that it triggers the display of spatial objects over which the mouse hovers</p>
 
-<ul>
-<li>Teams contribute to a single spatial representation online</li>
-</ul></li>
-<li>Online atlases
+<pre><code class="language-javascript">
+mapboxgl.accessToken = '&lt;your access Token&gt;';
+var map = new mapboxgl.Map({
+container: 'map', //container id in HTML
+style: 'mapbox://styles/mwidener/cjcouhmq03m9t2rmvgnmmsr1l',  //stylesheet location
+center: [-102.542951,59.650162],  // starting point, longitude/latitude
+zoom: 2.5 // starting zoom level
+});
 
-<ul>
-<li>Static collections of production quality maps that were formerly printed as books, can be interactive</li>
-</ul></li>
-<li>Static web maps
+//SIMPLY ADDING A POLYGON OF PROVINCES FROM MAPBOX VECTOR TILES
+map.on('style.load', function(){
+    
+map.addSource('provinces',{
+'type': 'vector',
+'url': 'mapbox://mwidener.6sokce8y'
+});
 
-<ul>
-<li>Pages with maps that have no interactivity</li>
+map.addLayer({
+'id': 'provinces-fill',
+'type': 'fill',
+'source': 'provinces',
+'layout': {},
+'paint': {
+    'fill-color': 'red',
+    'fill-opacity': 1,
+    'fill-outline-color': 'white'
+},
+'source-layer': &quot;CanadianProvinces-5onu90&quot;
+});
+
+//Add another visualization of the polygon of provinces. Note we do not add the source again!
+map.addLayer({
+'id': 'provinces-hl', //remember to change the name - this is our &quot;highlight&quot; layer (hence '-hl')
+'type': 'fill',
+'source': 'provinces',
+'layout': {},
+'paint': {
+    'fill-color': 'grey',
+    'fill-opacity': 1,
+    'fill-outline-color': 'black'
+},
+'source-layer': &quot;CanadianProvinces-5onu90&quot;,
+'filter': [&quot;==&quot;,&quot;PRID&quot;,&quot;&quot;] //Here is a filter that doesn't select anything
+});
+map.addLayer({
+'id': 'provinces-hl-lowpop', //remember to change the name - this is our &quot;highlight&quot; layer (hence '-hl')
+'type': 'fill',
+'source': 'provinces',
+'layout': {},
+'paint': {
+    'fill-color': 'green',
+    'fill-opacity': 1,
+    'fill-outline-color': 'white'
+},
+'source-layer': &quot;CanadianProvinces-5onu90&quot;,
+'filter': [&quot;==&quot;,&quot;PRID&quot;,&quot;&quot;] //Here is a filter that doesn't select anything
+});
+map.addLayer({
+'id': 'provinces-hl-highpop', //remember to change the name - this is our &quot;highlight&quot; layer (hence '-hl')
+'type': 'fill',
+'source': 'provinces',
+'layout': {},
+'paint': {
+    'fill-color': 'blue',
+    'fill-opacity': 1,
+    'fill-outline-color': 'white'
+},
+'source-layer': &quot;CanadianProvinces-5onu90&quot;,
+'filter': [&quot;==&quot;,&quot;PRID&quot;,&quot;&quot;] //Here is a filter that doesn't select anything
+});    
+})
+
+//*********************************
+//HOVER EVENTS 1
+//*********************************
+map.on('mousemove', 'provinces-fill', function(e) {
+var features = e.features;  //e is passed to the function - 'e' is the event info triggered
+if(features.length &gt; 0){ //if there are features in the e.features array then go into the conditional
+var feature = e.features[0];  //pull out the first feature element in the features array
+console.log(feature.properties)  //print out the feature properties in the browser console
+if(feature.properties.POP &gt; 1000000){  //if the POP attribute of the features is &gt; 1 mill, make it blue
+    map.setPaintProperty(&quot;provinces-hl&quot;,&quot;fill-color&quot;,&quot;blue&quot;);
+    console.log('pop is: ' + feature.properties.POP); //print pop value in console
+}
+else{
+    map.setPaintProperty(&quot;provinces-hl&quot;,&quot;fill-color&quot;,&quot;green&quot;); //if POP is less than 1 mill, make it green
+    console.log('pop is: ' + feature.properties.POP); //print pop value in console
+}
+map.setFilter(&quot;provinces-hl&quot;,[&quot;==&quot;, &quot;PRID&quot;, feature.properties.PRID]); //set the filter of the provinces-hl to display 
+                                                                       //the feature you're hovering over
+}
+});
+       
+
+map.on('mouseenter','provinces-fill',function(e){   //when your mouse enters the provinces-fill layer
+map.getCanvas().style.cursor = 'pointer';    //change the mouse cursor to a pointer
+});
+map.on('mouseleave','provinces-fill',function(e){
+map.getCanvas().style.cursor = '';                 // when the mouse leaves the provinces fill layer
+map.setFilter(&quot;provinces-hl&quot;,[&quot;==&quot;, &quot;PRID&quot;,&quot;&quot;]);   //change back to normal cursor, also remove filters to make
+                                               //provinces-hl layer invisible
+});
+//*********************************
+//HOVER EVENTS 1
+//*********************************
+
+
+
+
+//*********************************
+//HOVER EVENTS VERSION 2
+//*********************************
+/*map.on('mousemove', function(e){
+var features = map.queryRenderedFeatures(e.point, {
+&quot;layers&quot;: [&quot;provinces-fill&quot;]}
+);
+if(features.length &gt; 0){
+var feature = features[0];
+console.log(feature.properties)
+if(feature.properties.POP &gt; 1000000){
+    map.setPaintProperty(&quot;provinces-hl&quot;,&quot;fill-color&quot;,&quot;blue&quot;);
+    console.log('pop is: ' + feature.properties.POP);
+}
+else{
+    map.setPaintProperty(&quot;provinces-hl&quot;,&quot;fill-color&quot;,&quot;green&quot;);
+    console.log('pop is: ' + feature.properties.POP);
+}
+map.setFilter(&quot;provinces-hl&quot;,[&quot;==&quot;, &quot;PRID&quot;, feature.properties.PRID]);
+} 
+}); 
+map.on('mouseenter','provinces-fill',function(e){
+map.getCanvas().style.cursor = 'pointer';
+});
+map.on('mouseleave','provinces-fill',function(e){
+map.getCanvas().style.cursor = '';
+}); */
+//*********************************
+//HOVER EVENTS VERSION 2
+//*********************************
+
+
+</code></pre></li>
 </ul></li>
 </ul>
 
@@ -1437,8 +1579,6 @@
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -1587,7 +1727,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -1602,9 +1741,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -1622,7 +1758,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -1638,9 +1773,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -2083,6 +2215,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -2097,6 +2230,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -2130,6 +2266,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -2145,6 +2282,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -2169,10 +2309,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/lecture2/lec2_1/" title="Strengths/Weaknesses of Web Maps"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/lecture6/lec6_2/" title="Events"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/lecture2/lec2_3/" title="Making Web Maps" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/lecture6/lec6_4/" title="Mouse click event example" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Classification of Web Maps :: GGR472 Winter 2020</title>
+    <title>Filters :: GGR472 Winter 2020</title>
 
     
     <link href="/css/nucleus.css?1581632757" rel="stylesheet">
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/lecture2/lec2_2/">
+  <body class="" data-url="/lecture6/lec6_1/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -341,7 +341,7 @@
   
     
     <li data-nav-id="/lecture2/" title="Lecture 2: Data" class="dd-item 
-        parent
+        
         
         
         ">
@@ -396,8 +396,8 @@
   
     
     <li data-nav-id="/lecture2/lec2_2/" title="Classification of Web Maps" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/lecture2/lec2_2/">
@@ -1161,7 +1161,7 @@
   
     
     <li data-nav-id="/lecture6/" title="Filters and Mouse Events" class="dd-item 
-        
+        parent
         
         
         ">
@@ -1190,8 +1190,8 @@
   
     
     <li data-nav-id="/lecture6/lec6_1/" title="Filters" class="dd-item 
-        
-        
+        parent
+        active
         
         ">
       <a href="/lecture6/lec6_1/">
@@ -1338,6 +1338,8 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
@@ -1352,7 +1354,7 @@
             
           
           
-            <a href='/'>Home</a> > <a href='/lecture2/'>Lecture 2: Data</a> > Classification of Web Maps
+            <a href='/'>Home</a> > <a href='/lecture6/'>Filters and Mouse Events</a> > Filters
           
          
           
@@ -1363,6 +1365,27 @@
                   </span>
                 </div>
                 
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#what-if-we-want-two-conditions">What if we want two conditions</a></li>
+<li><a href="#how-do-we-combine-different-types-of-logic">How do we combine different types of logic?</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+                
               </div>
             </div>
             
@@ -1370,9 +1393,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Filters
+            </h1>
           
 
         
@@ -1382,52 +1408,68 @@
 
 	
 
-<h2 id="classifying-web-maps">Classifying Web Maps</h2>
+<p>When we add a layer to the map using the map.addLayer method, we have the ability to filter which parts of the spatial data are shown.</p>
 
-<h4 id="a-2001-paper-by-jan-kraak-attempted-to-classify-web-maps">A 2001 paper by Jan Kraak attempted to classify web maps</h4>
+<p>We&rsquo;ll be using older filter expressions:
+<a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/other/#other-filter">https://docs.mapbox.com/mapbox-gl-js/style-spec/other/#other-filter</a></p>
+
+<p>But Mapbox has recently rolled out &ldquo;new&rdquo; expressions &hellip; probably best to learn these - but I didn&rsquo;t have time before lecture!:
+<a href="https://docs.mapbox.com/mapbox-gl-js/style-spec/expressions/">https://docs.mapbox.com/mapbox-gl-js/style-spec/expressions/</a></p>
+
+<p>For vector tiles:</p>
+
+<pre><code class="language-js">‘filter’: [&lt;LOGIC&gt;,&lt;ATTRIBUTENAME&gt;, &lt;value&gt;] 
+</code></pre>
 
 <ul>
-<li>Web Maps
-
-<ul>
-<li>static maps</li>
-<li>view only</li>
-<li>interactive interface/contents</li>
-<li>dynamic maps</li>
-<li>view only</li>
-<li>interactive interface/contents</li>
-</ul></li>
+<li>Logic: ‘==’, ‘!=‘, ‘&gt;’, ‘&lt;’, ‘≥’, etc.</li>
+<li>Attribute name: the name of an attribute your file has – check studio</li>
+<li>Value: can be a string, numeric, boolean</li>
 </ul>
 
-<h4 id="other-ways-to-think-about-web-maps">Other ways to think about web maps</h4>
+<p>For example:</p>
+
+<pre><code>‘filter’: [“&gt;”, “income”, 100000] 
+</code></pre>
+
+<p>Translates to:</p>
+
+<p>income &gt; 100000</p>
+
+<h4 id="what-if-we-want-two-conditions">What if we want two conditions</h4>
 
 <ul>
-<li>Analytical web maps
+<li>spatial objects with a property &gt; x but &lt; y</li>
 
-<ul>
-<li>Basically GIS online</li>
-</ul></li>
-<li>Animated/Realtime web maps
+<li><p>Use the combining filter method:</p>
 
-<ul>
-<li>Constantly updated maps showing changes in spatial locations</li>
-</ul></li>
-<li>Collaborative web maps
+<pre><code class="language-javascript">[
+&quot;all&quot;,
+[&quot;&gt;&quot;, &lt;ATTRIBUTE&gt;, &lt;LESSER_VALUE&gt;],
+[&quot;&lt;=&quot;, &lt;ATTRIBUTE&gt;, &lt;GREATER_VALUE&gt;]
+]
 
-<ul>
-<li>Teams contribute to a single spatial representation online</li>
-</ul></li>
-<li>Online atlases
-
-<ul>
-<li>Static collections of production quality maps that were formerly printed as books, can be interactive</li>
-</ul></li>
-<li>Static web maps
-
-<ul>
-<li>Pages with maps that have no interactivity</li>
-</ul></li>
+[
+&quot;all&quot;,
+[&quot;&gt;&quot;, ‘population’, 100000],
+[&quot;&lt;=&quot;, ‘population’, 2000000]
+]
+</code></pre></li>
 </ul>
+
+<h4 id="how-do-we-combine-different-types-of-logic">How do we combine different types of logic?</h4>
+
+<p>Combining Filters</p>
+
+<pre><code>[&quot;all&quot;, f0, ..., fn] logical AND: f0 ∧ ... ∧ fn
+[&quot;any&quot;, f0, ..., fn] logical OR: f0 ∨ ... ∨ fn
+[&quot;none&quot;, f0, ..., fn] logical NOR: ¬f0 ∧ ... ∧ ¬fn
+</code></pre>
+
+<p>Where f0 is a filter that looks like:</p>
+
+<pre><code>[logic, attribute, value]
+</code></pre>
 
 
 
@@ -1437,8 +1479,6 @@
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -1587,7 +1627,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -1602,9 +1641,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -1622,7 +1658,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -1638,9 +1673,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -2083,6 +2115,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -2097,6 +2130,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -2113,6 +2147,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -2169,10 +2206,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/lecture2/lec2_1/" title="Strengths/Weaknesses of Web Maps"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/lecture6/" title="Filters and Mouse Events"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/lecture2/lec2_3/" title="Making Web Maps" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/lecture6/lec6_2/" title="Events" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
@@ -2182,19 +2219,19 @@
     <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
       <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
     </div>
-    <script src="/js/clipboard.min.js?1581632758"></script>
-    <script src="/js/perfect-scrollbar.min.js?1581632758"></script>
-    <script src="/js/perfect-scrollbar.jquery.min.js?1581632758"></script>
-    <script src="/js/jquery.sticky.js?1581632758"></script>
-    <script src="/js/featherlight.min.js?1581632758"></script>
-    <script src="/js/highlight.pack.js?1581632758"></script>
+    <script src="/js/clipboard.min.js?1581632757"></script>
+    <script src="/js/perfect-scrollbar.min.js?1581632757"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1581632757"></script>
+    <script src="/js/jquery.sticky.js?1581632757"></script>
+    <script src="/js/featherlight.min.js?1581632757"></script>
+    <script src="/js/highlight.pack.js?1581632757"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script src="/js/modernizr.custom-3.6.0.js?1581632758"></script>
-    <script src="/js/learn.js?1581632758"></script>
-    <script src="/js/hugo-learn.js?1581632758"></script>
+    <script src="/js/modernizr.custom-3.6.0.js?1581632757"></script>
+    <script src="/js/learn.js?1581632757"></script>
+    <script src="/js/hugo-learn.js?1581632757"></script>
 
-    <link href="/mermaid/mermaid.css?1581632758" rel="stylesheet" />
-    <script src="/mermaid/mermaid.js?1581632758"></script>
+    <link href="/mermaid/mermaid.css?1581632757" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1581632757"></script>
     <script>
         mermaid.initialize({ startOnLoad: true });
     </script>

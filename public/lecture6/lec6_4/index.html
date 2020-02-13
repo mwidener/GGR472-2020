@@ -9,23 +9,23 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Classification of Web Maps :: GGR472 Winter 2020</title>
+    <title>Mouse click event example :: GGR472 Winter 2020</title>
 
     
-    <link href="/css/nucleus.css?1581632757" rel="stylesheet">
-    <link href="/css/fontawesome-all.min.css?1581632757" rel="stylesheet">
-    <link href="/css/hybrid.css?1581632757" rel="stylesheet">
-    <link href="/css/featherlight.min.css?1581632757" rel="stylesheet">
-    <link href="/css/perfect-scrollbar.min.css?1581632757" rel="stylesheet">
-    <link href="/css/auto-complete.css?1581632757" rel="stylesheet">
-    <link href="/css/atom-one-dark-reasonable.css?1581632757" rel="stylesheet">
-    <link href="/css/theme.css?1581632757" rel="stylesheet">
-    <link href="/css/hugo-theme.css?1581632757" rel="stylesheet">
+    <link href="/css/nucleus.css?1581632758" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1581632758" rel="stylesheet">
+    <link href="/css/hybrid.css?1581632758" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1581632758" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1581632758" rel="stylesheet">
+    <link href="/css/auto-complete.css?1581632758" rel="stylesheet">
+    <link href="/css/atom-one-dark-reasonable.css?1581632758" rel="stylesheet">
+    <link href="/css/theme.css?1581632758" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1581632758" rel="stylesheet">
     
-      <link href="/css/theme-blue.css?1581632757" rel="stylesheet">
+      <link href="/css/theme-blue.css?1581632758" rel="stylesheet">
     
 
-    <script src="/js/jquery-3.3.1.min.js?1581632757"></script>
+    <script src="/js/jquery-3.3.1.min.js?1581632758"></script>
 
     <style>
       :root #header + #content > #left > #rlblock_left{
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/lecture2/lec2_2/">
+  <body class="" data-url="/lecture6/lec6_4/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -131,14 +131,14 @@
     <span data-search-clear=""><i class="fas fa-times"></i></span>
 </div>
 
-<script type="text/javascript" src="/js/lunr.min.js?1581632757"></script>
-<script type="text/javascript" src="/js/auto-complete.js?1581632757"></script>
+<script type="text/javascript" src="/js/lunr.min.js?1581632758"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1581632758"></script>
 <script type="text/javascript">
     
         var baseurl = "http:\/\/mwidener.github.io\/";
     
 </script>
-<script type="text/javascript" src="/js/search.js?1581632757"></script>
+<script type="text/javascript" src="/js/search.js?1581632758"></script>
 
     
   </div>
@@ -341,7 +341,7 @@
   
     
     <li data-nav-id="/lecture2/" title="Lecture 2: Data" class="dd-item 
-        parent
+        
         
         
         ">
@@ -396,8 +396,8 @@
   
     
     <li data-nav-id="/lecture2/lec2_2/" title="Classification of Web Maps" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/lecture2/lec2_2/">
@@ -1161,7 +1161,7 @@
   
     
     <li data-nav-id="/lecture6/" title="Filters and Mouse Events" class="dd-item 
-        
+        parent
         
         
         ">
@@ -1268,8 +1268,8 @@
   
     
     <li data-nav-id="/lecture6/lec6_4/" title="Mouse click event example" class="dd-item 
-        
-        
+        parent
+        active
         
         ">
       <a href="/lecture6/lec6_4/">
@@ -1338,6 +1338,8 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
@@ -1352,7 +1354,7 @@
             
           
           
-            <a href='/'>Home</a> > <a href='/lecture2/'>Lecture 2: Data</a> > Classification of Web Maps
+            <a href='/'>Home</a> > <a href='/lecture6/'>Filters and Mouse Events</a> > Mouse click event example
           
          
           
@@ -1363,6 +1365,23 @@
                   </span>
                 </div>
                 
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href="#let-s-also-try-this-with-a-mouse-click-event-but-try-to-figure-this-out-on-your-own">Let&rsquo;s also try this with a mouse click event &hellip; but try to figure this out on your own&hellip;</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+    </div>
+</div>
+
+                
               </div>
             </div>
             
@@ -1370,9 +1389,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Mouse click event example
+            </h1>
           
 
         
@@ -1382,52 +1404,149 @@
 
 	
 
-<h2 id="classifying-web-maps">Classifying Web Maps</h2>
+<h3 id="let-s-also-try-this-with-a-mouse-click-event-but-try-to-figure-this-out-on-your-own">Let&rsquo;s also try this with a mouse click event &hellip; but try to figure this out on your own&hellip;</h3>
 
-<h4 id="a-2001-paper-by-jan-kraak-attempted-to-classify-web-maps">A 2001 paper by Jan Kraak attempted to classify web maps</h4>
+<pre><code class="language-javascript">
+mapboxgl.accessToken = '&lt;your access token&gt;';
+var map = new mapboxgl.Map({
+    container: 'map', //container id in HTML
+    style: 'mapbox://styles/mwidener/cjcouhmq03m9t2rmvgnmmsr1l',  //stylesheet location
+    center: [-102.542951,59.650162],  // starting point, longitude/latitude
+    zoom: 2.5 // starting zoom level
+});
 
-<ul>
-<li>Web Maps
+//SIMPLY ADDING A POLYGON OF PROVINCES FROM MAPBOX VECTOR TILES
+map.on('style.load', function(){
+    
+    map.addSource('provinces',{
+        'type': 'vector',
+        'url': 'mapbox://mwidener.6sokce8y'
+    });
 
-<ul>
-<li>static maps</li>
-<li>view only</li>
-<li>interactive interface/contents</li>
-<li>dynamic maps</li>
-<li>view only</li>
-<li>interactive interface/contents</li>
-</ul></li>
-</ul>
+    map.addLayer({
+        'id': 'provinces-fill',
+        'type': 'fill',
+        'source': 'provinces',
+        'layout': {},
+        'paint': {
+            'fill-color': 'red',
+            'fill-opacity': 1,
+            'fill-outline-color': 'white'
+        },
+        'source-layer': &quot;CanadianProvinces-5onu90&quot;
+    });
 
-<h4 id="other-ways-to-think-about-web-maps">Other ways to think about web maps</h4>
+    //Add another visualization of the polygon of provinces. Note we do not add the source again!
+    map.addLayer({
+        'id': 'provinces-hl', //remember to change the name - this is our &quot;highlight&quot; layer (hence '-hl')
+        'type': 'fill',
+        'source': 'provinces',
+        'layout': {},
+        'paint': {
+            'fill-color': 'grey',
+            'fill-opacity': 1,
+            'fill-outline-color': 'black'
+        },
+        'source-layer': &quot;CanadianProvinces-5onu90&quot;,
+        'filter': [&quot;==&quot;,&quot;PRID&quot;,&quot;&quot;] //Here is a filter that doesn't select anything
+    });
+    map.addLayer({
+        'id': 'provinces-hl-lowpop', //remember to change the name - this is our &quot;highlight&quot; layer (hence '-hl')
+        'type': 'fill',
+        'source': 'provinces',
+        'layout': {},
+        'paint': {
+            'fill-color': 'green',
+            'fill-opacity': 1,
+            'fill-outline-color': 'white'
+        },
+        'source-layer': &quot;CanadianProvinces-5onu90&quot;,
+        'filter': [&quot;==&quot;,&quot;PRID&quot;,&quot;&quot;] //Here is a filter that doesn't select anything
+    });
+    map.addLayer({
+        'id': 'provinces-hl-highpop', //remember to change the name - this is our &quot;highlight&quot; layer (hence '-hl')
+        'type': 'fill',
+        'source': 'provinces',
+        'layout': {},
+        'paint': {
+            'fill-color': 'blue',
+            'fill-opacity': 1,
+            'fill-outline-color': 'white'
+        },
+        'source-layer': &quot;CanadianProvinces-5onu90&quot;,
+        'filter': [&quot;==&quot;,&quot;PRID&quot;,&quot;&quot;] //Here is a filter that doesn't select anything
+    });    
+})
 
-<ul>
-<li>Analytical web maps
+//*********************************
+//CLICK EVENTS VERSION 1
+//*********************************
+map.on('click','provinces-fill',function(e){
+    var features = e.features;
+    console.log('print: ' + features)
+    if(features.length &gt; 0){
+        var feature = features[0];
+        //console.log(feature)
+        var current_filter = map.getFilter(&quot;provinces-hl&quot;);
+        if(current_filter[2] == feature.properties.PRID){
+            map.setFilter(&quot;provinces-hl&quot;,[&quot;==&quot;, &quot;PRID&quot;, &quot;&quot;])
+        }
+        else{
+            map.setFilter(&quot;provinces-hl&quot;,[&quot;==&quot;, &quot;PRID&quot;, feature.properties.PRID]);
+        }
+    }
+}); 
+map.on('mouseenter','provinces-fill',function(e){
+       map.getCanvas().style.cursor = 'pointer';
+       });
+map.on('mouseleave','provinces-fill',function(e){
+    map.getCanvas().style.cursor = '';
+});
+//*********************************
+//CLICK EVENTS VERSION 1
+//*********************************
 
-<ul>
-<li>Basically GIS online</li>
-</ul></li>
-<li>Animated/Realtime web maps
 
-<ul>
-<li>Constantly updated maps showing changes in spatial locations</li>
-</ul></li>
-<li>Collaborative web maps
 
-<ul>
-<li>Teams contribute to a single spatial representation online</li>
-</ul></li>
-<li>Online atlases
+//*********************************
+//CLICK EVENTS VERSION 2
+//*********************************
+/*map.on('click', function(e){
+    //var point_test = e.point
+    //console.log('blah: ' +point_test);
+    var features = map.queryRenderedFeatures(e.point, {  //grab features from the point on which the event 'e' occurred
+        &quot;layers&quot;: [&quot;provinces-fill&quot;]}                    //we're only interested in features on provinces-fill layer
+    );
+    if (features.length &gt; 0){            // if there are features to be clicked on (i.e. 1 or more)
+        console.log(features[0]);       // print out the feature in the console
+        var feature = features[0];      //move the feature into a variable
+        var current_filter = map.getFilter(&quot;provinces-hl&quot;);  //get the current status of the provinces-hl filter
+        if(current_filter[2] == feature.properties.PRID){    //if the filter is currently set to where we clicked
+            map.setFilter(&quot;provinces-hl&quot;,[&quot;==&quot;, &quot;PRID&quot;, &quot;&quot;]) //then we want to remove the filter (i.e. turn off a previous click)
+        }
+        else{
+            map.setFilter(&quot;provinces-hl&quot;,[&quot;==&quot;, &quot;PRID&quot;, feature.properties.PRID]); //otherwise, we want to set the filter to the                                                                        //feature we clicked on
+        }
+    }
+    else{
+        map.setFilter(&quot;provinces-hl&quot;,[&quot;==&quot;, &quot;PRID&quot;, &quot;&quot;]);   //if features.length == that means we clicked off our feature layer
+                                                            //so make hl layer invisible
+    }
+}); 
+map.on('mouseenter','provinces-fill',function(e){
+       map.getCanvas().style.cursor = 'pointer';
+       });
+map.on('mouseleave','provinces-fill',function(e){
+    map.getCanvas().style.cursor = '';
+}); */
+//********************************* 
+//CLICK EVENTS VERSION 2
+//*********************************
 
-<ul>
-<li>Static collections of production quality maps that were formerly printed as books, can be interactive</li>
-</ul></li>
-<li>Static web maps
 
-<ul>
-<li>Pages with maps that have no interactivity</li>
-</ul></li>
-</ul>
+
+
+</code></pre>
 
 
 
@@ -1437,8 +1556,6 @@
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -1587,7 +1704,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -1602,9 +1718,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -1622,7 +1735,6 @@
             
                 
                     
-                    
                 
                 
 
@@ -1638,9 +1750,6 @@
             
             
                 
-                    
-                        
-                        
                     
                 
                 
@@ -2083,6 +2192,7 @@
             
                 
                     
+                    
                 
                 
 
@@ -2097,6 +2207,9 @@
             
             
                 
+                    
+                        
+                        
                     
                 
                 
@@ -2145,6 +2258,7 @@
             
             
                 
+                    
                     
                 
                 
@@ -2169,10 +2283,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/lecture2/lec2_1/" title="Strengths/Weaknesses of Web Maps"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/lecture6/lec6_3/" title="Mouse Move Event Example"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/lecture2/lec2_3/" title="Making Web Maps" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/lecture6/lec6_1/" title="Filters" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
