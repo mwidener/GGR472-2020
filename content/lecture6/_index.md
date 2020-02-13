@@ -1,9 +1,9 @@
 ---
 title: "Filters and Mouse Events"
 date: 2020-02-13T15:12:49-05:00
-draft: False
+draft: false
 weight: 8
-chapter: True
+chapter: true
 pre: "<b>6. </b>"
 ---
 
