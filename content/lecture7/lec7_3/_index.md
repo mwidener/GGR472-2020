@@ -24,7 +24,7 @@ https://docs.mapbox.com/mapbox-gl-js/style-spec/expressions/#interpolate
 * Helpful hint: to find the color scheme for your map, use [colorbrewer](http://colorbrewer2.org)
 * Let's try the following using the following [example data: median income DAs](toronto_censusDA_income.geojson).
 
-[test example?](choropleth_no_legend-2020.html)
+#### [Example](http://ggr472.geog.utoronto.ca/~widenerm/week_7/choropleth_no_legend-2020.html)
 
 ```javascript
 var map = new mapboxgl.Map({
