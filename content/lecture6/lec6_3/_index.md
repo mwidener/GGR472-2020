@@ -9,13 +9,13 @@ weight: 3
 
 * We can use the mousemove  event to highlight a spatial object when our mouse is hovering over it.
 * What we need:
- * Standard HTML file
- * Javascript file with 
+  * Standard HTML file
+  * Javascript file with
   * standard map object code
   * Standard add source code
   * Standard add layer code
 * Things that are a bit different:
- * We need a second add layer code section
+  * We need a second add layer code section
   * We will use the filter option to initially display NO spatial objects from the layer
   * As the mouse moves, we will change the filter so that it triggers the display of spatial objects over which the mouse hovers
 
@@ -31,7 +31,7 @@ var map = new mapboxgl.Map({
 
 //SIMPLY ADDING A POLYGON OF PROVINCES FROM MAPBOX VECTOR TILES
 map.on('style.load', function(){
-    
+
     map.addSource('provinces',{
         'type': 'vector',
         'url': 'mapbox://mwidener.6sokce8y'
@@ -108,11 +108,11 @@ map.on('mousemove', 'provinces-fill', function(e) {
             map.setPaintProperty("provinces-hl","fill-color","green"); //if POP is less than 1 mill, make it green
             console.log('pop is: ' + feature.properties.POP); //print pop value in console
         }
-        map.setFilter("provinces-hl",["==", "PRID", feature.properties.PRID]); //set the filter of the provinces-hl to display 
+        map.setFilter("provinces-hl",["==", "PRID", feature.properties.PRID]); //set the filter of the provinces-hl to display
                                                                                //the feature you're hovering over
     }
 });
-       
+
 
 map.on('mouseenter','provinces-fill',function(e){   //when your mouse enters the provinces-fill layer
        map.getCanvas().style.cursor = 'pointer';    //change the mouse cursor to a pointer
@@ -148,8 +148,8 @@ map.on('mouseleave','provinces-fill',function(e){
             console.log('pop is: ' + feature.properties.POP);
         }
         map.setFilter("provinces-hl",["==", "PRID", feature.properties.PRID]);
-    } 
-}); 
+    }
+});
 map.on('mouseenter','provinces-fill',function(e){
        map.getCanvas().style.cursor = 'pointer';
        });
