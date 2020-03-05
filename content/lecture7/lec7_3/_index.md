@@ -55,7 +55,7 @@ map.on('style.load', function(){
             30000, '#b2e2e2',
             50000, '#66c2a4',
             70000, '#2ca25f',
-            90000, '#006d2c'
+            80000, '#006d2c'
           ],
           "fill-opacity": 0.8,
           "fill-outline-color": 'black'
