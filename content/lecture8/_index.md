@@ -2,7 +2,7 @@
 title: "Introduction to TURF"
 date: 2020-03-12T15:04:40-04:00
 draft: false
-weight: 9
+weight: 10
 chapter: true
 pre: "<b>8. </b>"
 ---
