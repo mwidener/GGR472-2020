@@ -66,7 +66,7 @@ canadianProvinces.features.forEach(function(feature,i){
 
 #### Complete code:
 ##### html
-``` html
+``` HTML
 <!DOCTYPE html>
 <html>
 <head>

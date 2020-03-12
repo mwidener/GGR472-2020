@@ -15,7 +15,7 @@ You must start by adding a line of code to your HTML file to say we’re adding 
 
 Notice in the HTML below there is the standard reference to the mapbox gl js code, and then a new script tag for TURF.
 
-``` html
+``` HTML
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js'></script>
 <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css' rel='stylesheet' />
 <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
