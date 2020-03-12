@@ -2,7 +2,7 @@
 title: "Pop-ups & Visualization"
 date: 2020-02-13T11:12:49-05:00
 draft: false
-weight: 8
+weight: 9
 chapter: true
 pre: "<b>7. </b>"
 ---
