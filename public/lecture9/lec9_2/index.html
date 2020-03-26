@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Pop-ups &amp; Visualization :: GGR472 Winter 2020</title>
+    <title>Select with Buffer Example :: GGR472 Winter 2020</title>
 
     
     <link href="/css/nucleus.css?1585232343" rel="stylesheet">
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/lecture7/">
+  <body class="" data-url="/lecture9/lec9_2/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -1301,8 +1301,8 @@
   
     
     <li data-nav-id="/lecture7/" title="Pop-ups &amp; Visualization" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/lecture7/">
@@ -1581,7 +1581,7 @@
   
     
     <li data-nav-id="/lecture9/" title="More TURF Examples" class="dd-item 
-        
+        parent
         
         
         ">
@@ -1636,8 +1636,8 @@
   
     
     <li data-nav-id="/lecture9/lec9_2/" title="Select with Buffer Example" class="dd-item 
-        
-        
+        parent
+        active
         
         ">
       <a href="/lecture9/lec9_2/">
@@ -1706,6 +1706,8 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
@@ -1716,7 +1718,13 @@
             
           
           
-            <a href='/'>Home</a> > Pop-ups & Visualization
+            
+            
+          
+          
+            <a href='/'>Home</a> > <a href='/lecture9/'>More TURF Examples</a> > Select with Buffer Example
+          
+         
           
          
           
@@ -1725,6 +1733,21 @@
                   </span>
                 </div>
                 
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#in-this-example">In this example:</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
               </div>
             </div>
             
@@ -1732,9 +1755,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Select with Buffer Example
+            </h1>
           
 
         
@@ -1742,31 +1768,162 @@
 
 
 
-	<h3 id="weve-done-a-little-exploring-with-mouse-move-and-click-events">We&rsquo;ve done a little exploring with mouse move and click events.</h3>
-<p>In this lecture we&rsquo;re going to learn about pop ups, and then we&rsquo;ll move to designing choropleth maps.</p>
-<p>This will build on last weeks lecture.</p>
-<h4 id="recall-that-mouse-events-allow-us-to-interact-with-our-web-maps">Recall that mouse events allow us to interact with our web maps</h4>
-<ul>
-<li>&lsquo;mousemove&rsquo;/&lsquo;mouseenter&rsquo;/&lsquo;mouseleave&rsquo; events track where there pointer goes
-<ul>
-<li>if one or more conditions are met then execute some function
-<ul>
-<li>for example: change cursor to pointer if mouse moves over a specific layer</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>&lsquo;mouseclick&rsquo; events listen for you to click the mouse button
-<ul>
-<li>if a click happens, then it looks where it happened and then executes a function
-<ul>
-<li>for example: click on a province layer and execute a command to change the layer color</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+	<h3 id="in-this-example">In this example:</h3>
+<p>We will use TURF to creat a circular buffer around wherever we click our mouse. This uses both mouse events and the TURF library. Once the TURF buffer is created, we can select points that fall within (a spatial join) the buffer and do something with this information (in our case, recolor the points and produce a pop up).</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">utf-8</span> /&gt;
+  &lt;<span style="color:#f92672">title</span>&gt;Select Supermarkets with Buffer using TURF&lt;/<span style="color:#f92672">title</span>&gt;
+  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;viewport&#39;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39;</span> /&gt;
+  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;https://npmcdn.com/@turf/turf/turf.min.js&#39;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
 
+  &lt;<span style="color:#f92672">style</span>&gt;
+  <span style="color:#f92672">body</span> { <span style="color:#66d9ef">margin</span>:<span style="color:#ae81ff">0</span>; <span style="color:#66d9ef">padding</span>:<span style="color:#ae81ff">0</span>; }
+  #map { <span style="color:#66d9ef">position</span>:<span style="color:#66d9ef">absolute</span>; <span style="color:#66d9ef">top</span>:<span style="color:#ae81ff">0</span>; <span style="color:#66d9ef">bottom</span>:<span style="color:#ae81ff">0</span>; <span style="color:#66d9ef">width</span>:<span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>; }
+  &lt;/<span style="color:#f92672">style</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+  &lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;map&#39;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;map&#39;</span>&gt; &lt;/<span style="color:#f92672">div</span>&gt;
+  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;./supermarkets.geojson&#39;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+  &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;./bufferSelect.js&#39;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//DON&#39;T FORGET TO ADD YOUR ACCESS TOKEN!
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//Standard set up
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">map</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">mapboxgl</span>.<span style="color:#a6e22e">Map</span>({
+  <span style="color:#a6e22e">container</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;map&#39;</span>,
+  <span style="color:#a6e22e">style</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;mapbox://styles/mapbox/streets-v8&#39;</span>,
+  <span style="color:#a6e22e">center</span><span style="color:#f92672">:</span> [<span style="color:#f92672">-</span><span style="color:#ae81ff">79.385811</span>,<span style="color:#ae81ff">43.655298</span>],
+  <span style="color:#a6e22e">zoom</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">9</span>
+});
+
+<span style="color:#75715e">//because we can click the map, change the cursor to a &#39;pointer&#39; style
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">getCanvas</span>().<span style="color:#a6e22e">style</span>.<span style="color:#a6e22e">cursor</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;pointer&#39;</span>;
+
+<span style="color:#75715e">//add the supermarkets point layer from the geojson file
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;style.load&#39;</span>, <span style="color:#66d9ef">function</span>(){
+  <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">addSource</span>(<span style="color:#e6db74">&#39;supermarketSource&#39;</span>,{
+    <span style="color:#e6db74">&#39;type&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;geojson&#39;</span>,
+    <span style="color:#e6db74">&#39;data&#39;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">sprmkt</span>
+  });
+  <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">addLayer</span>({
+    <span style="color:#e6db74">&#39;id&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;supermarketLayer&#39;</span>,
+    <span style="color:#e6db74">&#39;type&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;circle&#39;</span>,
+    <span style="color:#e6db74">&#39;source&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;supermarketSource&#39;</span>,
+    <span style="color:#e6db74">&#39;layout&#39;</span><span style="color:#f92672">:</span> {},
+    <span style="color:#e6db74">&#39;paint&#39;</span><span style="color:#f92672">:</span> {
+      <span style="color:#e6db74">&#39;circle-color&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;red&#39;</span>, <span style="color:#75715e">//make our base supermarket layer small red points
+</span><span style="color:#75715e"></span>      <span style="color:#e6db74">&#39;circle-radius&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>,
+      <span style="color:#e6db74">&#39;circle-opacity&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">0.75</span>
+    }
+  });
+});
+
+
+<span style="color:#75715e">//*********************************************************
+</span><span style="color:#75715e">//Generate buffer, find points within buffer,
+</span><span style="color:#75715e">//highlight points, and create pop up with info about points
+</span><span style="color:#75715e">//*********************************************************
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//set up variables before real work starts
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tempClickBuffer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tempSprmkts</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">popup</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">mapboxgl</span>.<span style="color:#a6e22e">Popup</span>({
+  <span style="color:#a6e22e">closeButton</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,
+  <span style="color:#a6e22e">closeOnClick</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">false</span>
+});
+
+<span style="color:#75715e">//when you click the map, do the following.
+</span><span style="color:#75715e">//recall &#39;e&#39; is an event data object: https://www.mapbox.com/mapbox-gl-js/api/#EventData
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#34;click&#34;</span>, <span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">e</span>) {
+    <span style="color:#75715e">//clean up variables if we&#39;ve already clicked somewhere else.
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//check by seeing if there&#39;s geojson text in the tempClickBuffer variable
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">tempClickBuffer</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>){
+      <span style="color:#a6e22e">tempClickBuffer</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+      <span style="color:#a6e22e">tempSprmkts</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span>;
+      <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">removeLayer</span>(<span style="color:#e6db74">&#39;tempClickBufferLayer&#39;</span>); <span style="color:#75715e">//get rid of the old buffer
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">removeSource</span>(<span style="color:#e6db74">&#39;tempClickBufferSource&#39;</span>); <span style="color:#75715e">//get rid of the old selected supermarkets
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">removeLayer</span>(<span style="color:#e6db74">&#39;selectedSprmkts&#39;</span>); <span style="color:#75715e">//reset source
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">removeSource</span>(<span style="color:#e6db74">&#39;tempSprmkts&#39;</span>); <span style="color:#75715e">//reset source
+</span><span style="color:#75715e"></span>    }
+
+<span style="color:#75715e">//create a point geojson object from the event data - this creates a point where you clicked
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">tempLngLat</span> <span style="color:#f92672">=</span> [<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">lngLat</span>.<span style="color:#a6e22e">lng</span>,<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">lngLat</span>.<span style="color:#a6e22e">lat</span>]; <span style="color:#75715e">//create an array that looks like: [lng,lat]
+</span><span style="color:#75715e"></span>    <span style="color:#75715e">//make an object that is a &#39;geojson&#39; object from the point data
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">tempPt</span> <span style="color:#f92672">=</span> {
+      <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Feature&#34;</span>,
+      <span style="color:#e6db74">&#34;properties&#34;</span><span style="color:#f92672">:</span> {},
+      <span style="color:#e6db74">&#34;geometry&#34;</span><span style="color:#f92672">:</span> {
+        <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;Point&#34;</span>,
+        <span style="color:#e6db74">&#34;coordinates&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">tempLngLat</span>
+      }
+    };
+
+<span style="color:#75715e">//create a buffer using the point geojson you just created, 1 km circular buffer
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">tempClickBuffer</span> <span style="color:#f92672">=</span> (<span style="color:#a6e22e">turf</span>.<span style="color:#a6e22e">buffer</span>(<span style="color:#a6e22e">tempPt</span>, <span style="color:#ae81ff">1</span>, {<span style="color:#a6e22e">units</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;kilometers&#39;</span>}));
+    <span style="color:#a6e22e">tempClickBuffer</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">turf</span>.<span style="color:#a6e22e">featureCollection</span>([<span style="color:#a6e22e">tempClickBuffer</span>]);
+<span style="color:#75715e">//see what supermarkets (from the sprmkt geojson variable) are within the &#39;tempClickBuffer&#39; geojson object you just created.
+</span><span style="color:#75715e">//this function generates a new featureCollection called &#39;tempSprmkts&#39;, which we will display later
+</span><span style="color:#75715e"></span>
+    <span style="color:#a6e22e">tempSprmkts</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">turf</span>.<span style="color:#a6e22e">pointsWithinPolygon</span>(<span style="color:#a6e22e">sprmkt</span>,<span style="color:#a6e22e">tempClickBuffer</span>);
+
+<span style="color:#75715e">//if the array is not null, add a pop up centered on your click location
+</span><span style="color:#75715e">//that states the number of supermarkets within the clickBuffer
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">tempSprmkts</span>.<span style="color:#a6e22e">features</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">null</span>){
+      <span style="color:#a6e22e">popup</span>.<span style="color:#a6e22e">remove</span>()
+           .<span style="color:#a6e22e">setLngLat</span>(<span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">lngLat</span>)
+           .<span style="color:#a6e22e">setHTML</span>(<span style="color:#e6db74">&#39;The number of supermarkets within 1 kilometer of&#39;</span><span style="color:#f92672">+</span>
+                    <span style="color:#e6db74">&#39; where you clicked is: &#39;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">tempSprmkts</span>.<span style="color:#a6e22e">features</span>.<span style="color:#a6e22e">length</span>)
+           .<span style="color:#a6e22e">addTo</span>(<span style="color:#a6e22e">map</span>)
+    };
+
+<span style="color:#75715e">//center the  map on the point you clicked and zoom in, using &#39;easeTo&#39; so it is animated
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">easeTo</span>({
+      <span style="color:#a6e22e">center</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">lngLat</span>, <span style="color:#75715e">//center on the point you clicked
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">zoom</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">12</span>, <span style="color:#75715e">//zoom to zoom level 12
+</span><span style="color:#75715e"></span>      <span style="color:#a6e22e">duration</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1000</span> <span style="color:#75715e">//take 1000 milliseconds to get there
+</span><span style="color:#75715e"></span>    })
+
+<span style="color:#75715e">//add the source and layer information of the buffer geojson (tempClickBuffer) and
+</span><span style="color:#75715e">//subset of supermarkets geojson (tempSprmkts) objects you created
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">addSource</span>(<span style="color:#e6db74">&#39;tempSprmkts&#39;</span>,{
+      <span style="color:#e6db74">&#39;type&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;geojson&#39;</span>,
+      <span style="color:#e6db74">&#39;data&#39;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">tempSprmkts</span>
+    });
+    <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">addLayer</span>({
+      <span style="color:#e6db74">&#39;id&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;selectedSprmkts&#39;</span>,
+      <span style="color:#e6db74">&#39;type&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;circle&#39;</span>,
+      <span style="color:#e6db74">&#39;source&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;tempSprmkts&#39;</span>,
+      <span style="color:#e6db74">&#39;layout&#39;</span><span style="color:#f92672">:</span> {},
+      <span style="color:#e6db74">&#39;paint&#39;</span><span style="color:#f92672">:</span> {
+        <span style="color:#e6db74">&#39;circle-color&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;blue&#39;</span>, <span style="color:#75715e">//make our selected supermarket layer BIGGER BLUE points
+</span><span style="color:#75715e"></span>        <span style="color:#e6db74">&#39;circle-radius&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">6</span>,
+        <span style="color:#e6db74">&#39;circle-opacity&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+      }
+    });
+    <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">addSource</span>(<span style="color:#e6db74">&#39;tempClickBufferSource&#39;</span>,{
+      <span style="color:#e6db74">&#39;type&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;geojson&#39;</span>,
+      <span style="color:#e6db74">&#39;data&#39;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">tempClickBuffer</span>
+    });
+    <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">addLayer</span>({
+      <span style="color:#e6db74">&#39;id&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;tempClickBufferLayer&#39;</span>,
+      <span style="color:#e6db74">&#39;type&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;fill&#39;</span>,
+      <span style="color:#e6db74">&#39;source&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;tempClickBufferSource&#39;</span>,
+      <span style="color:#e6db74">&#39;layout&#39;</span><span style="color:#f92672">:</span> {},
+      <span style="color:#e6db74">&#39;paint&#39;</span><span style="color:#f92672">:</span> {
+        <span style="color:#e6db74">&#39;fill-color&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;white&#39;</span>,
+        <span style="color:#e6db74">&#39;fill-opacity&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">.4</span>,
+        <span style="color:#e6db74">&#39;fill-outline-color&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;black&#39;</span>
+      }
+    }, <span style="color:#e6db74">&#39;selectedSprmkts&#39;</span>); <span style="color:#75715e">// insert the buffer behind the selectedSupermarkets layer
+</span><span style="color:#75715e"></span>
+
+  });
+</code></pre></div>
 
 
 
@@ -1775,8 +1932,6 @@
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -2495,92 +2650,6 @@
             
                 
                     
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
                 
                 
 
@@ -2693,6 +2762,93 @@
             
             
                 
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
                     
                 
                 
@@ -2717,10 +2873,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/lecture6/lec6_4/" title="Mouse click event example"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/lecture9/lec9_1/" title="Choropleth Grid and Clustered Points"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/lecture7/lec7_1/" title="Pop-ups" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/lecture9/lec9_1/" title="Choropleth Grid and Clustered Points" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>

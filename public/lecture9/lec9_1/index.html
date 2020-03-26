@@ -9,7 +9,7 @@
 
     <link rel="icon" href="/images/favicon.png" type="image/png">
 
-    <title>Pop-ups &amp; Visualization :: GGR472 Winter 2020</title>
+    <title>Choropleth Grid and Clustered Points :: GGR472 Winter 2020</title>
 
     
     <link href="/css/nucleus.css?1585232343" rel="stylesheet">
@@ -35,7 +35,7 @@
     </style>
     
   </head>
-  <body class="" data-url="/lecture7/">
+  <body class="" data-url="/lecture9/lec9_1/">
     <nav id="sidebar" class="showVisitedLinks">
 
 
@@ -1301,8 +1301,8 @@
   
     
     <li data-nav-id="/lecture7/" title="Pop-ups &amp; Visualization" class="dd-item 
-        parent
-        active
+        
+        
         
         ">
       <a href="/lecture7/">
@@ -1581,7 +1581,7 @@
   
     
     <li data-nav-id="/lecture9/" title="More TURF Examples" class="dd-item 
-        
+        parent
         
         
         ">
@@ -1610,8 +1610,8 @@
   
     
     <li data-nav-id="/lecture9/lec9_1/" title="Choropleth Grid and Clustered Points" class="dd-item 
-        
-        
+        parent
+        active
         
         ">
       <a href="/lecture9/lec9_1/">
@@ -1706,6 +1706,8 @@
                         </a>
                     </span>
                   
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
                   <span class="links">
                  
                  
@@ -1716,7 +1718,13 @@
             
           
           
-            <a href='/'>Home</a> > Pop-ups & Visualization
+            
+            
+          
+          
+            <a href='/'>Home</a> > <a href='/lecture9/'>More TURF Examples</a> > Choropleth Grid and Clustered Points
+          
+         
           
          
           
@@ -1725,6 +1733,22 @@
                   </span>
                 </div>
                 
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#in-this-example">In this example:</a></li>
+      </ul>
+    </li>
+    <li><a href="#remember-to-use-your-own-access-token-and-mapbox-style">Remember to use your own access token and mapbox style</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
               </div>
             </div>
             
@@ -1732,9 +1756,12 @@
         
         </div>
         
-          <div id="chapter">
-        
         <div id="body-inner">
+          
+            <h1>
+              
+              Choropleth Grid and Clustered Points
+            </h1>
           
 
         
@@ -1742,31 +1769,121 @@
 
 
 
-	<h3 id="weve-done-a-little-exploring-with-mouse-move-and-click-events">We&rsquo;ve done a little exploring with mouse move and click events.</h3>
-<p>In this lecture we&rsquo;re going to learn about pop ups, and then we&rsquo;ll move to designing choropleth maps.</p>
-<p>This will build on last weeks lecture.</p>
-<h4 id="recall-that-mouse-events-allow-us-to-interact-with-our-web-maps">Recall that mouse events allow us to interact with our web maps</h4>
-<ul>
-<li>&lsquo;mousemove&rsquo;/&lsquo;mouseenter&rsquo;/&lsquo;mouseleave&rsquo; events track where there pointer goes
-<ul>
-<li>if one or more conditions are met then execute some function
-<ul>
-<li>for example: change cursor to pointer if mouse moves over a specific layer</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>&lsquo;mouseclick&rsquo; events listen for you to click the mouse button
-<ul>
-<li>if a click happens, then it looks where it happened and then executes a function
-<ul>
-<li>for example: click on a province layer and execute a command to change the layer color</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
+	<h3 id="in-this-example">In this example:</h3>
+<p>We will use TURF to count the number of airport points that exist within each grid cell.</p>
+<p>Then we&rsquo;ll use the code we learned about previously to color the grid cells based on the number of airports inside.</p>
+<p>Finally, we will use the mapbox feature that allows points to cluster at various zoom levels. This is useful if you have lots of points scattered all over the place. At low resolutions nearby points will group together. At higher resolutions they will separate.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span>&gt;
+&lt;<span style="color:#f92672">head</span>&gt;
+  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">utf-8</span> /&gt;
+  &lt;<span style="color:#f92672">title</span>&gt;Airport Hex Bins&lt;/<span style="color:#f92672">title</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;viewport&#39;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39;</span> /&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://api.mapbox.com/mapbox-gl-js/v1.9.0/mapbox-gl.css&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> /&gt;
+    &lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;https://npmcdn.com/@turf/turf/turf.min.js&#39;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
 
+  &lt;<span style="color:#f92672">style</span>&gt;
+    <span style="color:#f92672">body</span> { <span style="color:#66d9ef">margin</span>:<span style="color:#ae81ff">0</span>; <span style="color:#66d9ef">padding</span>:<span style="color:#ae81ff">0</span>; }
+    #map { <span style="color:#66d9ef">position</span>:<span style="color:#66d9ef">absolute</span>; <span style="color:#66d9ef">top</span>:<span style="color:#ae81ff">0</span>; <span style="color:#66d9ef">bottom</span>:<span style="color:#ae81ff">0</span>; <span style="color:#66d9ef">width</span>:<span style="color:#ae81ff">100</span><span style="color:#66d9ef">%</span>; }
+  &lt;/<span style="color:#f92672">style</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+&lt;<span style="color:#f92672">body</span>&gt;
+
+&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;map&#39;</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;map&#39;</span>&gt; &lt;/<span style="color:#f92672">div</span>&gt;
+
+
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;canadianAirports.geojson&#39;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;./turfExample2.js&#39;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><h2 id="remember-to-use-your-own-access-token-and-mapbox-style">Remember to use your own access token and mapbox style</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#75715e">//ADD YOUR ACCESS TOKEN!!!!!!!!
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">map</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">mapboxgl</span>.<span style="color:#a6e22e">Map</span>({
+    <span style="color:#a6e22e">container</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;map&#39;</span>,
+    <span style="color:#a6e22e">style</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;mapbox://styles/mwidener/cjcotwplq3loj2ss0pjqmmigh&#39;</span>,
+    <span style="color:#a6e22e">center</span><span style="color:#f92672">:</span> [<span style="color:#f92672">-</span><span style="color:#ae81ff">90</span>, <span style="color:#ae81ff">52</span>],
+    <span style="color:#a6e22e">zoom</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">3</span>
+});
+
+<span style="color:#75715e">//CREATE A SQUARE GRID
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">bbox</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">turf</span>.<span style="color:#a6e22e">bbox</span>(<span style="color:#a6e22e">canadianAirports</span>);<span style="color:#75715e">//extent method returns bounding box in order:
+</span><span style="color:#75715e">//minX (West), minY(South), maxX (East), maxY (North)
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">cellSide</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">50</span>; <span style="color:#75715e">//in the units you defined above
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">options</span> <span style="color:#f92672">=</span> {<span style="color:#a6e22e">units</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#39;kilometers&#39;</span>}; <span style="color:#75715e">//units that will determine the width of the square grid
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">airport_squaregrid</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">turf</span>.<span style="color:#a6e22e">squareGrid</span>(<span style="color:#a6e22e">bbox</span>, <span style="color:#a6e22e">cellSide</span>, <span style="color:#a6e22e">options</span>); <span style="color:#75715e">//makes the new geojson squaregrid features
+</span><span style="color:#75715e"></span>
+<span style="color:#75715e">//COUNT THE NUMBER OF AIRPORTS IN EACH SQUARE BIN
+</span><span style="color:#75715e">//This function collects the properties from the point layer and &#39;collects&#39; them into the polygon layer
+</span><span style="color:#75715e">//In this case, we are collecting all of the FEATUREID properties from the canadianAirports. For
+</span><span style="color:#75715e">//each square, there will be a collection of FEATUREIDs from the airports that are within them
+</span><span style="color:#75715e">//HINT: look at the squareAirports geojson featurecollection you&#39;ve created in the javascript console
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">squareAirports</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">turf</span>.<span style="color:#a6e22e">collect</span>(<span style="color:#a6e22e">airport_squaregrid</span>,<span style="color:#a6e22e">canadianAirports</span>, <span style="color:#e6db74">&#34;FEATUREID&#34;</span>,<span style="color:#e6db74">&#34;AIRPORTNAMES&#34;</span>);
+
+
+
+<span style="color:#75715e">//Now we need to count the number of features inside of each square, and also figure out the largest
+</span><span style="color:#75715e">//number of airports in any one of our squares
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">max_airports_in_square</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+<span style="color:#a6e22e">squareAirports</span>.<span style="color:#a6e22e">features</span>.<span style="color:#a6e22e">forEach</span>(<span style="color:#66d9ef">function</span>(<span style="color:#a6e22e">square</span>){
+    <span style="color:#a6e22e">square</span>.<span style="color:#a6e22e">properties</span>.<span style="color:#a6e22e">AIRPORTCOUNT</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">square</span>.<span style="color:#a6e22e">properties</span>.<span style="color:#a6e22e">AIRPORTNAMES</span>.<span style="color:#a6e22e">length</span>; <span style="color:#75715e">//calculate the length of the collected FEATUREIDs - this gives us the number of points in each square
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">square</span>.<span style="color:#a6e22e">properties</span>.<span style="color:#a6e22e">AIRPORTCOUNT</span> <span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">max_airports_in_square</span>){
+        <span style="color:#a6e22e">max_airports_in_square</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">square</span>.<span style="color:#a6e22e">properties</span>.<span style="color:#a6e22e">AIRPORTCOUNT</span>; <span style="color:#75715e">//update the max number of airports in a square
+</span><span style="color:#75715e"></span>    }
+});
+
+
+<span style="color:#75715e">//Standard map.on section, where we load the airport point file
+</span><span style="color:#75715e"></span><span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">on</span>(<span style="color:#e6db74">&#39;style.load&#39;</span>, <span style="color:#66d9ef">function</span>(){
+    <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">addSource</span>(<span style="color:#e6db74">&#39;airports&#39;</span>,{
+        <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;geojson&#34;</span>,
+        <span style="color:#e6db74">&#34;data&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">canadianAirports</span>,
+        <span style="color:#e6db74">&#34;cluster&#34;</span><span style="color:#f92672">:</span> <span style="color:#66d9ef">true</span>,            <span style="color:#75715e">//use the cluster function available for geojson points
+</span><span style="color:#75715e"></span>        <span style="color:#e6db74">&#34;clusterMaxZoom&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+        <span style="color:#e6db74">&#34;clusterRadius&#34;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">30</span>
+    })
+    <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">addLayer</span>({
+        <span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;airportsLayer&#34;</span>,
+        <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;circle&#34;</span>,
+        <span style="color:#e6db74">&#34;source&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;airports&#34;</span>,
+        <span style="color:#e6db74">&#34;layout&#34;</span><span style="color:#f92672">:</span> {},
+        <span style="color:#e6db74">&#34;paint&#34;</span><span style="color:#f92672">:</span>{
+            <span style="color:#e6db74">&#39;circle-color&#39;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;black&#34;</span>,
+            <span style="color:#e6db74">&#39;circle-radius&#39;</span><span style="color:#f92672">:</span> {
+                <span style="color:#a6e22e">base</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">10</span>,
+                <span style="color:#a6e22e">stops</span><span style="color:#f92672">:</span> [[<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">10</span>], [<span style="color:#ae81ff">22</span>, <span style="color:#ae81ff">180</span>]]}, <span style="color:#75715e">//adjust size of point at diff zoom levels
+</span><span style="color:#75715e"></span>            <span style="color:#e6db74">&#39;circle-opacity&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">1</span>
+        }
+    });
+
+    <span style="color:#75715e">// Now we can add our square grid ... it was generated before the map was displayed
+</span><span style="color:#75715e"></span>    <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">addSource</span>(<span style="color:#e6db74">&#39;airportGrid&#39;</span>,{
+        <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;geojson&#34;</span>,
+        <span style="color:#e6db74">&#34;data&#34;</span><span style="color:#f92672">:</span> <span style="color:#a6e22e">squareAirports</span>  <span style="color:#75715e">//this is the square grid WITH the collect attribute
+</span><span style="color:#75715e"></span>    });
+    <span style="color:#a6e22e">map</span>.<span style="color:#a6e22e">addLayer</span>({
+        <span style="color:#e6db74">&#34;id&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;airportSquareGrid-layer&#34;</span>,
+        <span style="color:#e6db74">&#34;type&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;fill&#34;</span>,
+        <span style="color:#e6db74">&#34;source&#34;</span><span style="color:#f92672">:</span> <span style="color:#e6db74">&#34;airportGrid&#34;</span>,
+        <span style="color:#e6db74">&#34;layout&#34;</span><span style="color:#f92672">:</span> {},
+        <span style="color:#e6db74">&#34;paint&#34;</span><span style="color:#f92672">:</span>{
+          <span style="color:#e6db74">&#34;fill-color&#34;</span><span style="color:#f92672">:</span> [
+            <span style="color:#e6db74">&#39;interpolate&#39;</span>,
+            [<span style="color:#e6db74">&#39;linear&#39;</span>],
+            [<span style="color:#e6db74">&#39;to-number&#39;</span>,[<span style="color:#e6db74">&#39;get&#39;</span>, <span style="color:#e6db74">&#39;AIRPORTCOUNT&#39;</span>],<span style="color:#ae81ff">0</span>], <span style="color:#75715e">// get a number, but if provided with a non-number default to 0
+</span><span style="color:#75715e"></span>            <span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#39;#ffffcc&#39;</span>,
+            <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;#c7e9b4&#39;</span>,
+            <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;#7fcdbb&#39;</span>,
+            <span style="color:#ae81ff">4</span>, <span style="color:#e6db74">&#39;#41b6c4&#39;</span>,
+            <span style="color:#ae81ff">8</span>, <span style="color:#e6db74">&#39;#2c7fb8&#39;</span>,
+            <span style="color:#a6e22e">max_airports_in_square</span>, <span style="color:#e6db74">&#39;#253494&#39;</span>
+          ],  
+            <span style="color:#e6db74">&#39;fill-opacity&#39;</span><span style="color:#f92672">:</span> <span style="color:#ae81ff">.5</span>
+        }
+    },<span style="color:#e6db74">&#34;airportsLayer&#34;</span>); <span style="color:#75715e">//insert these layers BEFORE the point file so that the airport point file is on top
+</span><span style="color:#75715e"></span>});
+</code></pre></div>
 
 
 
@@ -1775,8 +1892,6 @@
 	
 </footer>
 
-        
-            </div> 
         
         </div> 
         
@@ -2495,92 +2610,6 @@
             
                 
                     
-                    
-                
-                
-
-                    
-                    
-                        
-                    
-                    
-
-                    
-                        
-            
-            
-                
-                    
-                        
-                        
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
-                
-                
-
-                    
-                    
-                    
-
-                    
-            
-        
-                    
-            
-        
-                    
-                        
-            
-            
-                
-                    
                 
                 
 
@@ -2693,6 +2722,93 @@
             
             
                 
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
                     
                 
                 
@@ -2717,10 +2833,10 @@
 	 
 	 
 		
-			<a class="nav nav-prev" href="/lecture6/lec6_4/" title="Mouse click event example"> <i class="fa fa-chevron-left"></i></a>
+			<a class="nav nav-prev" href="/lecture9/" title="More TURF Examples"> <i class="fa fa-chevron-left"></i></a>
 		
 		
-			<a class="nav nav-next" href="/lecture7/lec7_1/" title="Pop-ups" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+			<a class="nav nav-next" href="/lecture9/lec9_2/" title="Select with Buffer Example" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
 		
 	
     </div>
